@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import Media from '../MediaContainer/MediaContainer.js';
 import axios from 'axios';
 
 const DateList = (props) => {
@@ -12,20 +13,24 @@ const DateList = (props) => {
     const [day, setDay] = useState(new Date().getDate())
     const [days, setDays] = useState();
 
-    useEffect(() => {
-        axios
-          .get(`https://api.nasa.gov/planetary/apod?api_key=VSDX406ElKtT7Zaql3PPtpmCz7yhy6tKEgRV796g&date=${year}-${month}-${day}`)
-          .then(response => {
-            props.dataSetter(response.data);
-          }).catch(err => console.log(err));
-      }, [year,month,day,props]);
-
     for (let i = 1995; i <= thisYear; i++) {
         yearArray.push(i);
     }
 
-    for (let i = 1; i <= 12; i++) {
-        monthArray.push(i);
+    if (year === 1995) {
+        for (let i = 6; i <= 12; i++) {
+            monthArray.push(i);
+        }
+        if (month < 6) {
+            setMonth(6);
+            if (day < 20) {
+                setDay(20);
+            }
+        }
+    } else {
+        for (let i = 1; i <= 12; i++) {
+            monthArray.push(i);
+        }
     }
 
     useEffect(() => {
@@ -33,8 +38,14 @@ const DateList = (props) => {
             case 2:
                 if (year % 4 === 0) {
                     setDays(29);
+                    if (day > 29) {
+                        setDay(29);
+                    }
                 } else {
                     setDays(28);
+                    if (day > 28) {
+                        setDay(28)
+                    }
                 }
                 break;
             case 4:
@@ -42,16 +53,24 @@ const DateList = (props) => {
             case 9:
             case 11:
                 setDays(30);
+                if (day > 30) {
+                    setDay(30);
+                }
                 break;
             default:
                 setDays(31);
                 break;
         }
-    },[month,year])
+    },[month,year,day])
     
-
-    for (let i = 1; i <= days; i++) {
-        dayArray.push(i);
+    if (year === 1995 && parseInt(month) === 6) {
+        for (let i = 20; i <= days; i++) {
+            dayArray.push(i);
+        }
+    } else {
+        for (let i = 1; i <= days; i++) {
+            dayArray.push(i);
+        }
     }
 
     const dayList = dayArray.map((day, index) => {
@@ -81,18 +100,34 @@ const DateList = (props) => {
         setDay(parseInt(value));  
     }
 
+    const [data, setData] = useState(Object);
+    useEffect(() => {
+        axios
+            .get(`https://api.nasa.gov/planetary/apod?api_key=VSDX406ElKtT7Zaql3PPtpmCz7yhy6tKEgRV796g&date=${year}-${month}-${day}`)
+            .then(response => {
+            setData(response.data);
+            }).catch(err => console.log(err));   
+    }, [year,month,day,setData])
+    
     return(
-        <form>
-            <select id="year" value={year} onChange={(e) => yearHandler(e)}>
-                {yearList}
-            </select>
-            <select id="month" value={month} onChange={(e) => monthHandler(e)}>
-                {monthList}
-            </select>
-            <select id="day" value={day} onChange={(e) => dayHandler(e)}>
-                {dayList}
-            </select>
-        </form>
+        <div>
+            <div className="form-container">
+                <form>
+                    <select id="year" value={year} onChange={(e) => yearHandler(e)}>
+                        {yearList}
+                    </select>
+                    <select id="month" value={month} onChange={(e) => monthHandler(e)}>
+                        {monthList}
+                    </select>
+                    <select id="day" value={day} onChange={(e) => dayHandler(e)}>
+                        {dayList}
+                    </select>
+                </form>
+            </div>
+            <div className="media-container">
+                <Media date={data.date} explanation={data.explanation} media_type={data.media_type} title={data.title} url={data.url} />
+            </div>
+        </div>
     )
 }
 
