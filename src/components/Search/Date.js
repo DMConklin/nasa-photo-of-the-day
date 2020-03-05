@@ -30,11 +30,11 @@ const DateList = (props) => {
             }
         }
     } else if (year === thisYear) {
-        for (let i = 1; i <= month; i++) {
-            monthArray.push(i);
-        }
         if (month > thisMonth) {
             setMonth(thisMonth)
+        }
+        for (let i = 1; i <= thisMonth; i++) {
+            monthArray.push(i);
         }
     } else {
         for (let i = 1; i <= 12; i++) {
@@ -72,7 +72,7 @@ const DateList = (props) => {
         }
     },[month,year,day])
     
-    if (year === 1995 && parseInt(month) === 6) {
+    if (year === 1995 && month === 6) {
         for (let i = 20; i <= days; i++) {
             dayArray.push(i);
         }
@@ -119,12 +119,12 @@ const DateList = (props) => {
         axios
             .get(`https://api.nasa.gov/planetary/apod?api_key=VSDX406ElKtT7Zaql3PPtpmCz7yhy6tKEgRV796g&date=${year}-${month}-${day}`)
             .then(response => {
-            setData(response.data);
+                setData(response.data);
             }).catch(err => console.log(err));   
     }, [year,month,day,setData])
     
     return(
-        <div>
+        <div className="main">
             <div className="form-container">
                 <form>
                     <select id="year" value={year} onChange={(e) => yearHandler(e)}>
@@ -138,9 +138,7 @@ const DateList = (props) => {
                     </select>
                 </form>
             </div>
-            <div className="media-container">
-                <Media date={data.date} explanation={data.explanation} media_type={data.media_type} title={data.title} url={data.url} />
-            </div>
+            <Media date={data.date} explanation={data.explanation} media_type={data.media_type} title={data.title} url={data.url} />
         </div>
     )
 }

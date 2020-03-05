@@ -23,9 +23,9 @@ const MediaContainer = (props) => {
     }, [props])
     return(
         <div className="media-container">
-            <h1>{props.title}</h1>
+            <h1>{props.date}</h1>
             {media}
-            <h2>{props.date}</h2>
+            <h2>{props.title}</h2>
             <p>{props.explanation}</p>
         </div>
     )
