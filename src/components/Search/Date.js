@@ -1,6 +1,14 @@
 import React, {useState, useEffect} from 'react';
 import Media from '../MediaContainer/MediaContainer.js';
 import axios from 'axios';
+import styled from 'styled-components';
+
+const MainDiv = styled.div``;
+const SearchContainer = styled.div`
+    padding: 25px;
+    flex-direction: column;
+    justify-content: space-around;
+`;
 
 const DateList = (props) => {
     const thisYear = new Date().getFullYear();
@@ -76,11 +84,13 @@ const DateList = (props) => {
         for (let i = 20; i <= days; i++) {
             dayArray.push(i);
         }
-    } else if (year === thisYear && month === thisMonth && day > thisDay) { 
+    } else if (year === thisYear && month === thisMonth) { 
         for (let i = 1; i <= thisDay; i++) {
             dayArray.push(i);
         }
-        setDay(thisDay)
+        if (day > thisDay) {
+            setDay(thisDay);
+        }
     } else {
         for (let i = 1; i <= days; i++) {
             dayArray.push(i);
@@ -119,13 +129,14 @@ const DateList = (props) => {
         axios
             .get(`https://api.nasa.gov/planetary/apod?api_key=VSDX406ElKtT7Zaql3PPtpmCz7yhy6tKEgRV796g&date=${year}-${month}-${day}`)
             .then(response => {
+                console.log(response.data);
                 setData(response.data);
             }).catch(err => console.log(err));   
     }, [year,month,day,setData])
     
     return(
-        <div className="main">
-            <div className="form-container">
+        <MainDiv>
+            <SearchContainer>
                 <form>
                     <select id="year" value={year} onChange={(e) => yearHandler(e)}>
                         {yearList}
@@ -137,9 +148,9 @@ const DateList = (props) => {
                         {dayList}
                     </select>
                 </form>
-            </div>
-            <Media date={data.date} explanation={data.explanation} media_type={data.media_type} title={data.title} url={data.url} />
-        </div>
+            </SearchContainer>
+            <Media copyright={data.copyright ? data.copyright : ''} date={data.date} explanation={data.explanation} media_type={data.media_type} title={data.title} url={data.hdurl ? data.hdurl : data.url} />
+        </MainDiv>
     )
 }
 
