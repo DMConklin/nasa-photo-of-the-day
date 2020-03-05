@@ -4,6 +4,8 @@ import axios from 'axios';
 
 const DateList = (props) => {
     const thisYear = new Date().getFullYear();
+    const thisMonth = new Date().getMonth()+1;
+    const thisDay = new Date().getDate();
     const yearArray = [];
     const monthArray = [];
     const dayArray = [];
@@ -26,6 +28,13 @@ const DateList = (props) => {
             if (day < 20) {
                 setDay(20);
             }
+        }
+    } else if (year === thisYear) {
+        for (let i = 1; i <= month; i++) {
+            monthArray.push(i);
+        }
+        if (month > thisMonth) {
+            setMonth(thisMonth)
         }
     } else {
         for (let i = 1; i <= 12; i++) {
@@ -67,6 +76,11 @@ const DateList = (props) => {
         for (let i = 20; i <= days; i++) {
             dayArray.push(i);
         }
+    } else if (year === thisYear && month === thisMonth && day > thisDay) { 
+        for (let i = 1; i <= thisDay; i++) {
+            dayArray.push(i);
+        }
+        setDay(thisDay)
     } else {
         for (let i = 1; i <= days; i++) {
             dayArray.push(i);
