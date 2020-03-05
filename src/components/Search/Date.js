@@ -38,14 +38,8 @@ const DateList = (props) => {
                 }
                 break;
             case 4:
-                setDays(30);
-                break;
             case 6:
-                setDays(30);
-                break;
             case 9:
-                setDays(30);
-                break;
             case 11:
                 setDays(30);
                 break;
