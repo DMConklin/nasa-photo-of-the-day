@@ -4,7 +4,8 @@ import Header from './Header.js';
 import axios from 'axios';
 import styled from 'styled-components';
 
-const MainDiv = styled.div``;
+const MainDiv = styled.div`
+`;
 const BodyContainerDiv = styled.div`
     max-width: 1280px;
     margin: 0 auto;
@@ -13,6 +14,9 @@ const SearchContainer = styled.div`
     padding: 25px;
     flex-direction: column;
     justify-content: space-around;
+`;
+const SubmitButton = styled.button`
+
 `;
 
 const DateList = (props) => {
@@ -28,23 +32,27 @@ const DateList = (props) => {
     const [day, setDay] = useState(new Date().getDate())
     const [days, setDays] = useState();
 
+    const [chosenDay, setChosenDay] = useState(thisDay);
+    const [chosenMonth, setChosenMonth] = useState(thisMonth);
+    const [chosenYear, setChosenYear] = useState(thisYear);
+
     for (let i = 1995; i <= thisYear; i++) {
         yearArray.push(i);
     }
 
-    if (year === 1995) {
+    if (chosenYear === 1995) {
         for (let i = 6; i <= 12; i++) {
             monthArray.push(i);
         }
-        if (month < 6) {
-            setMonth(6);
-            if (day < 20) {
-                setDay(20);
+        if (chosenMonth < 6) {
+            setChosenMonth(6);
+            if (chosenDay < 20) {
+                setChosenDay(20);
             }
         }
-    } else if (year === thisYear) {
-        if (month > thisMonth) {
-            setMonth(thisMonth)
+    } else if (chosenYear === thisYear) {
+        if (chosenMonth > thisMonth) {
+            setChosenMonth(thisMonth)
         }
         for (let i = 1; i <= thisMonth; i++) {
             monthArray.push(i);
@@ -56,17 +64,17 @@ const DateList = (props) => {
     }
 
     useEffect(() => {
-        switch (month) {
+        switch (chosenMonth) {
             case 2:
-                if (year % 4 === 0) {
+                if (chosenYear % 4 === 0) {
                     setDays(29);
-                    if (day > 29) {
-                        setDay(29);
+                    if (chosenDay > 29) {
+                        setChosenDay(29);
                     }
                 } else {
                     setDays(28);
-                    if (day > 28) {
-                        setDay(28)
+                    if (chosenDay > 28) {
+                        setChosenDay(28)
                     }
                 }
                 break;
@@ -75,26 +83,26 @@ const DateList = (props) => {
             case 9:
             case 11:
                 setDays(30);
-                if (day > 30) {
-                    setDay(30);
+                if (chosenDay > 30) {
+                    setChosenDay(30);
                 }
                 break;
             default:
                 setDays(31);
                 break;
         }
-    },[month,year,day])
+    },[chosenMonth,chosenYear,chosenDay])
     
-    if (year === 1995 && month === 6) {
+    if (chosenYear === 1995 && chosenMonth === 6) {
         for (let i = 20; i <= days; i++) {
             dayArray.push(i);
         }
-    } else if (year === thisYear && month === thisMonth) { 
+    } else if (chosenYear === thisYear && chosenMonth === thisMonth) { 
         for (let i = 1; i <= thisDay; i++) {
             dayArray.push(i);
         }
-        if (day > thisDay) {
-            setDay(thisDay);
+        if (chosenDay > thisDay) {
+            setChosenDay(thisDay);
         }
     } else {
         for (let i = 1; i <= days; i++) {
@@ -116,17 +124,17 @@ const DateList = (props) => {
 
     let yearHandler = (event) => {
         let value = event.target.value;
-        setYear(parseInt(value));  
+        setChosenYear(parseInt(value));
     }
 
     let monthHandler = (event) => {
         let value = event.target.value;
-        setMonth(parseInt(value));  
+        setChosenMonth(parseInt(value));
     }
 
     let dayHandler = (event) => {
         let value = event.target.value;
-        setDay(parseInt(value));  
+        setChosenDay(parseInt(value)); 
     }
 
     const [data, setData] = useState(Object);
@@ -138,6 +146,12 @@ const DateList = (props) => {
                 setData(response.data);
             }).catch(err => console.log(err));   
     }, [year,month,day,setData])
+
+    const submitHandler = () => {
+        setDay(chosenDay);
+        setMonth(chosenMonth);
+        setYear(chosenYear);
+    }
     
     return(
         <MainDiv>
@@ -145,16 +159,17 @@ const DateList = (props) => {
             <BodyContainerDiv>
                 <SearchContainer>
                     <form>
-                        <select id="year" value={year} onChange={(e) => yearHandler(e)}>
+                        <select id="year" value={chosenYear} onChange={(e) => yearHandler(e)}>
                             {yearList}
                         </select>
-                        <select id="month" value={month} onChange={(e) => monthHandler(e)}>
+                        <select id="month" value={chosenMonth} onChange={(e) => monthHandler(e)}>
                             {monthList}
                         </select>
-                        <select id="day" value={day} onChange={(e) => dayHandler(e)}>
+                        <select id="day" value={chosenDay} onChange={(e) => dayHandler(e)}>
                             {dayList}
                         </select>
                     </form>
+                    <SubmitButton onClick={() => submitHandler()}>Submit</SubmitButton>
                 </SearchContainer>
                 <Media copyright={data.copyright ? data.copyright : ''} date={data.date} explanation={data.explanation} media_type={data.media_type} title={data.title} url={data.hdurl ? data.hdurl : data.url} />
             </BodyContainerDiv>

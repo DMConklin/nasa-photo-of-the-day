@@ -14,15 +14,19 @@ const ApodArticle = styled.article`
     padding: 25px;
     border-radius: 15px;
     box-shadow: 5px 5px 15px;
+    position: relative;
+    z-index: 2;
 `;
 
 const ApodImage = styled.img`
     width: 100%;
 `;
+const CopyrightP = styled.p`
+`;
 const ApodImageContainer = styled.div`
     position: relative;
     top: -50px;
-    z-index: -1;
+    z-index: 1;
 `;
 
 const ApodVideo = styled.iframe`
