@@ -4,7 +4,8 @@ import Header from './Header.js';
 import axios from 'axios';
 import styled from 'styled-components';
 
-const MainDiv = styled.div`
+const MainDiv = styled.div``;
+const BodyContainerDiv = styled.div`
     max-width: 1280px;
     margin: 0 auto;
 `;
@@ -141,20 +142,22 @@ const DateList = (props) => {
     return(
         <MainDiv>
             <Header />
-            <SearchContainer>
-                <form>
-                    <select id="year" value={year} onChange={(e) => yearHandler(e)}>
-                        {yearList}
-                    </select>
-                    <select id="month" value={month} onChange={(e) => monthHandler(e)}>
-                        {monthList}
-                    </select>
-                    <select id="day" value={day} onChange={(e) => dayHandler(e)}>
-                        {dayList}
-                    </select>
-                </form>
-            </SearchContainer>
-            <Media copyright={data.copyright ? data.copyright : ''} date={data.date} explanation={data.explanation} media_type={data.media_type} title={data.title} url={data.hdurl ? data.hdurl : data.url} />
+            <BodyContainerDiv>
+                <SearchContainer>
+                    <form>
+                        <select id="year" value={year} onChange={(e) => yearHandler(e)}>
+                            {yearList}
+                        </select>
+                        <select id="month" value={month} onChange={(e) => monthHandler(e)}>
+                            {monthList}
+                        </select>
+                        <select id="day" value={day} onChange={(e) => dayHandler(e)}>
+                            {dayList}
+                        </select>
+                    </form>
+                </SearchContainer>
+                <Media copyright={data.copyright ? data.copyright : ''} date={data.date} explanation={data.explanation} media_type={data.media_type} title={data.title} url={data.hdurl ? data.hdurl : data.url} />
+            </BodyContainerDiv>
         </MainDiv>
     )
 }
