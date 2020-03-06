@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
-const MediaContainerDiv = styled.div``;
 const MediaDiv = styled.div`
     flex-direction: column;
     width: 100%;
@@ -14,8 +13,6 @@ const ApodArticle = styled.article`
     padding: 25px;
     border-radius: 15px;
     box-shadow: 5px 5px 15px;
-    position: relative;
-    z-index: 2;
 `;
 
 const ApodImage = styled.img`
@@ -24,15 +21,12 @@ const ApodImage = styled.img`
 const CopyrightP = styled.p`
 `;
 const ApodImageContainer = styled.div`
-    position: relative;
-    top: -50px;
-    z-index: 1;
 `;
 
 const ApodVideo = styled.iframe`
-    position: absolute;
     width: 100%;
     height: 100%;
+    position: absolute;
 `;
 const ApodVideoContainer = styled.div`
     width: 100%;
@@ -64,22 +58,19 @@ const MediaContainer = (props) => {
                     <ApodImageContainer>
                         <ApodImage src={props.url} alt={props.title} />
                     </ApodImageContainer>
-                    <p className="copyright">{props.copyright ? '© ' + props.copyright : ''}</p>
                 </MediaDiv>
             )
         }
     }, [props])
 
     return(
-        <MediaContainerDiv>
             <ApodArticle>
                 <h2>{props.title}</h2>
                 <p>{props.date}</p>
                 <p>{props.explanation}</p>
-                {props.media_type === 'video' ? media : null}
+                {media}
+                <p className="copyright">{props.copyright ? '© ' + props.copyright : ''}</p>
             </ApodArticle>
-                {props.media_type === 'image' ? media : null}
-        </MediaContainerDiv>
     )
 }
 
