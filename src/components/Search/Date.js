@@ -33,6 +33,17 @@ const SelectDay = styled.select`
 
 `;
 
+const ApodFooter = styled.footer`
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    height: 50px;
+`;
+
+const FooterP = styled.p`
+    margin: 0;
+`;
+
 const DateList = (props) => {
     const thisYear = new Date().getFullYear();
     const thisMonth = new Date().getMonth()+1;
@@ -187,6 +198,9 @@ const DateList = (props) => {
                 </SearchContainer>
                 <Media copyright={data.copyright ? data.copyright : ''} date={data.date} explanation={data.explanation} media_type={data.media_type} title={data.title} url={data.hdurl ? data.hdurl : data.url} />
             </BodyContainerDiv>
+            <ApodFooter>
+                <FooterP>This app was created using React App and NASA's APOD API</FooterP>
+            </ApodFooter>
         </MainDiv>
     )
 }
