@@ -30,6 +30,9 @@ const MediaCopyright = styled.p`
 const ApodImage = styled.img`
     width: 100%;
 `;
+const ApodImageLink = styled.a`
+
+`;
 const ApodImageContainer = styled.div`
 
 `;
@@ -67,7 +70,7 @@ const MediaContainer = (props) => {
             setMedia(
                 <MediaDiv>
                     <ApodImageContainer>
-                        <ApodImage src={props.url} alt={props.title} />
+                        <ApodImageLink href={props.url} target="__blank"><ApodImage src={props.url} alt={props.title} /></ApodImageLink>
                     </ApodImageContainer>
                 </MediaDiv>
             )
