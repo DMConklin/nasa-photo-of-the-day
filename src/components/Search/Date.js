@@ -16,6 +16,20 @@ const SearchContainer = styled.div`
     justify-content: space-around;
 `;
 const SubmitButton = styled.button`
+    margin-top: 15px;
+`;
+
+const DateForm = styled.form`
+    
+`;
+
+const SelectYear = styled.select`
+    
+`;
+const SelectMonth = styled.select`
+
+`;
+const SelectDay = styled.select`
 
 `;
 
@@ -158,17 +172,17 @@ const DateList = (props) => {
             <Header />
             <BodyContainerDiv>
                 <SearchContainer>
-                    <form>
-                        <select id="year" value={chosenYear} onChange={(e) => yearHandler(e)}>
+                    <DateForm>
+                        <SelectYear id="year" value={chosenYear} onChange={(e) => yearHandler(e)}>
                             {yearList}
-                        </select>
-                        <select id="month" value={chosenMonth} onChange={(e) => monthHandler(e)}>
+                        </SelectYear>
+                        <SelectMonth id="month" value={chosenMonth} onChange={(e) => monthHandler(e)}>
                             {monthList}
-                        </select>
-                        <select id="day" value={chosenDay} onChange={(e) => dayHandler(e)}>
+                        </SelectMonth>
+                        <SelectDay id="day" value={chosenDay} onChange={(e) => dayHandler(e)}>
                             {dayList}
-                        </select>
-                    </form>
+                        </SelectDay>
+                    </DateForm>
                     <SubmitButton onClick={() => submitHandler()}>Submit</SubmitButton>
                 </SearchContainer>
                 <Media copyright={data.copyright ? data.copyright : ''} date={data.date} explanation={data.explanation} media_type={data.media_type} title={data.title} url={data.hdurl ? data.hdurl : data.url} />

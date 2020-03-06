@@ -14,13 +14,24 @@ const ApodArticle = styled.article`
     border-radius: 15px;
     box-shadow: 5px 5px 15px;
 `;
+const ApodArticleHeader = styled.h2`
+
+`;
+const ArticleDate = styled.p`
+
+`;
+const ArticleContent = styled.p`
+
+`;
+const MediaCopyright = styled.p`
+
+`;
 
 const ApodImage = styled.img`
     width: 100%;
 `;
-const CopyrightP = styled.p`
-`;
 const ApodImageContainer = styled.div`
+
 `;
 
 const ApodVideo = styled.iframe`
@@ -65,11 +76,11 @@ const MediaContainer = (props) => {
 
     return(
             <ApodArticle>
-                <h2>{props.title}</h2>
-                <p>{props.date}</p>
-                <p>{props.explanation}</p>
+                <ApodArticleHeader>{props.title}</ApodArticleHeader>
+                <ArticleDate>{props.date}</ArticleDate>
+                <ArticleContent>{props.explanation}</ArticleContent>
                 {media}
-                <p className="copyright">{props.copyright ? '© ' + props.copyright : ''}</p>
+                <MediaCopyright className="copyright">{props.copyright ? '© ' + props.copyright : ''}</MediaCopyright>
             </ApodArticle>
     )
 }

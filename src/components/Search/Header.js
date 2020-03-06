@@ -2,8 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const HeaderDiv = styled.div`
-    display: flex;
-    padding: 15px calc((100% - 1280px) / 2);
+    padding: 15px 0;
 `;
 
 const LogoHeader = styled.h1`
