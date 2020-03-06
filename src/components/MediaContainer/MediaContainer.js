@@ -35,7 +35,6 @@ const ApodVideoContainer = styled.div`
     height: 0;
     padding-bottom: 56.25%;
     position: relative;
-    margin-top: 35px;
 `;
 
 const MediaContainer = (props) => {

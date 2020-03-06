@@ -1,9 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import Media from '../MediaContainer/MediaContainer.js';
+import Header from './Header.js';
 import axios from 'axios';
 import styled from 'styled-components';
 
-const MainDiv = styled.div``;
+const MainDiv = styled.div`
+    max-width: 1280px;
+    margin: 0 auto;
+`;
 const SearchContainer = styled.div`
     padding: 25px;
     flex-direction: column;
@@ -136,6 +140,7 @@ const DateList = (props) => {
     
     return(
         <MainDiv>
+            <Header />
             <SearchContainer>
                 <form>
                     <select id="year" value={year} onChange={(e) => yearHandler(e)}>
